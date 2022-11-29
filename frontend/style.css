@@ -1,0 +1,29 @@
+*{
+    margin: 0;
+}
+
+canvas{
+    display: block;
+    margin: 0 auto;
+    width: 100vw;
+    height: 100vh;
+}
+
+#container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.hidden{
+    display: none;
+}
+.hidden > *{
+    display: none;
+}
