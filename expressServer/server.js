@@ -5,8 +5,14 @@ const path = require('path');
 const port = process.env.PORT || 3000;
 
 const app = express();
+
 app.use(express.static(path.join(__dirname, '../glTesting')));
 
-app.listen(port, () => {
-    console.log(`Server is listening at port ${port}`);   
-});
+while (port < 4000) {
+    try {
+        app.listen(port, () => console.log(`Listening on port ${port}`));
+        break;
+    } catch (err) {
+        port++;
+    }
+}
