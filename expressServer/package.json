@@ -1,16 +1,16 @@
 {
-  "name": "nodetcp",
+  "name": "expressserver",
   "version": "1.0.0",
   "description": "",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "tcp":"node tcp/server.js",
-    "http":"node expressServer/server.js"
+    "start": "node server.js"
   },
   "author": "Jordon Giusto",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.18.2",
     "net": "^1.0.2",
     "ws": "^8.11.0"
   }

@@ -108,7 +108,7 @@ async function start(name){
 }
 
 async function connectToServer(){
-    const ws = new WebSocket('ws://192.168.1.111:8080');
+    const ws = new WebSocket('ws://192.168.1.11:8080');
     return new Promise((resolve, reject) => {
         ws.onopen = () => {
             console.log('Connected to server');

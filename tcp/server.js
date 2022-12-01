@@ -7,15 +7,24 @@ function connection(ws) {
     console.log('CONNECTION:');
     const id = uuidv4();
     const color = Math.floor(Math.random() * 360);
-    let pos = {x: 0, y: 0};
+    let pos = {x: 0, y: 0, z: 0};
     const metadata = { id, pos };
     clients.set(ws, metadata);
 
     function updatePlayerArray(first = false){
+        if(first){
+            console.log(id);
+        }
         const innitMessage = {
             type: first? 'innit' : 'playerListUpdate',
+            id: id,
             dots: [...clients.values()].map(client => ({ id: client.id, pos: client.pos, name:client.name })),
         };
+        if(first){
+            ws.send(JSON.stringify(innitMessage));
+            return;
+        }
+        
         [...clients.keys()].forEach(client => {
             client.send(JSON.stringify(innitMessage));
         });
