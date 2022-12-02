@@ -14,6 +14,7 @@ function updatePlayers(players_update){
         var material = new THREE.MeshPhongMaterial( {color: 0xffff00} );
         var sphere = new THREE.Mesh( geometry, material );
         sphere.castShadow = true;
+        sphere.receiveShadow = true;
         sphere.position.x = player.pos.x;
         sphere.position.z = player.pos.z;
         sphere.position.y = player.pos.y;

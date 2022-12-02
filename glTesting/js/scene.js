@@ -12,9 +12,6 @@ RENDERER.shadowMap.type = THREE.PCFSoftShadowMap;
 document.body.appendChild( RENDERER.domElement )
 let GEOMETRY = new THREE.BoxGeometry(1, 1, 1);
 let MATERIAL = new THREE.MeshPhongMaterial({color: 0xffffff});
-const CUBE = new THREE.Mesh(GEOMETRY, MATERIAL);
-CUBE.castShadow = true;
-CUBE.receiveShadow = true;
 
 
 GEOMETRY = new THREE.PlaneGeometry(10, 10, 10);
@@ -23,26 +20,38 @@ const PLANE = new THREE.Mesh(GEOMETRY, MATERIAL);
 PLANE.receiveShadow = true;
 
 SCENE.add(PLANE);
-SCENE.add(CUBE);
 
-
-const light = new THREE.DirectionalLight( 0xffffb0, .7 );
-light.position.set( 10, 10, 7 );
+const light = new THREE.DirectionalLight( 0xfffff0, .7 );
+light.position.set( 10, 5, 7 );
 light.shadow.camera.far = 500;
-light.shadow.camera.left = -10;
-light.shadow.camera.right = 10;
+light.shadow.camera.left = -20;
+light.shadow.camera.right = 20;
+light.shadow.camera.top = 20;
+light.shadow.camera.bottom = -20;
 light.shadow.mapSize.width = 1024;
 light.shadow.mapSize.height = 1024;
 light.castShadow = true;
 SCENE.add( light );
 
-const ambientLight = new THREE.AmbientLight(0x0b0ff, 0.1);
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
 SCENE.add(ambientLight);
+
+const pointLight = new THREE.PointLight(0xFFa040, .2, 30);
+pointLight.position.set(0, 7, 5);
+pointLight.castShadow = false;
+pointLight.shadow.mapSize.width = 256;
+pointLight.shadow.mapSize.height = 256;
+
+const duplicatePointLight = pointLight.clone();
+duplicatePointLight.position.set(0, 7, -5);
+
+SCENE.add(pointLight);
+SCENE.add(duplicatePointLight);
+
 
 RENDERER.setClearColor(0x588597, 1);
 
 PLANE.rotation.x = Math.PI / 2;
-CUBE.position.y = 0.5;
 CAMERA.position.y = .5;
 
 CAMERA.position.z = 5;
