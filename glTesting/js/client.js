@@ -1,7 +1,7 @@
 var dots = [];
 var id = null;
 
-async function start(name, updatePlayers){
+async function start(name, updatePlayers, recieveMessage){
     const ws = await connectToServer();
     ws.onmessage = (e) => {
         let message = JSON.parse(e.data);
@@ -25,6 +25,11 @@ async function start(name, updatePlayers){
             dots = message.dots;
             console.log("PlayerListUpdate", dots);
         }
+        else if(message.type === 'message'){
+            console.log("MESSAGE: " + message.message );
+            recieveMessage(message.message);
+            return;
+        }
         let pos = message.pos;
         //clear canvas
         //draw circle
@@ -35,7 +40,10 @@ async function start(name, updatePlayers){
     function updatePos(pos){
         ws.send(JSON.stringify({type: "update", pos: pos}));
     }
-
+    function sendMessage(message){
+        console.log("Sending message: " + message);
+        ws.send(JSON.stringify({type: "message", message: `[${name}]: ${message}`}));
+    }
     window.addEventListener('keydown', (e) => {
         if(e.key === 't'){
             console.log("id", id);
@@ -43,12 +51,12 @@ async function start(name, updatePlayers){
         }
     });
 
-    return updatePos;
+    return {updatePos, sendMessage};
     
 }
 
 async function connectToServer(){
-    const ws = new WebSocket('ws://ec2-35-165-126-189.us-west-2.compute.amazonaws.com:8080');
+    const ws = new WebSocket('ws://localhost:8080');
     return new Promise((resolve, reject) => {
         ws.onopen = () => {
             console.log('Connected to server');

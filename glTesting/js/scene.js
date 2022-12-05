@@ -59,7 +59,7 @@ CAMERA.position.z = 5;
 CAMERA.yVelocity = 0;
 
 window.addEventListener('keydown', function (event) {
-    if(CAMERA.position.y > 0.5){
+    if(CAMERA.position.y > 0.5 || this.document.activeElement != this.document.body){
         return;
     }
     if(event.key == ' '){
@@ -83,3 +83,39 @@ loader.load(
         SCENE.add( object );
     }
 );
+
+var containers = [];
+containers.push({
+    x: 0,
+    z: -1.8,
+    x_size: 6,
+    z_size: 13.2,
+});
+
+containers.push({
+    x: 0,
+    z: 18,
+    x_size: 17.5,
+    z_size: 5.6,
+});
+
+containers.push({
+    x: 12.4,
+    z: 0,
+    x_size: 5.1,
+    z_size: 25,
+});
+
+containers.push({
+    x: -12.4,
+    z: 0,
+    x_size: 5.1,
+    z_size: 25,
+});
+
+containers.push({
+    x: 0,
+    z: 15,
+    x_size: 2.4,
+    z_size: 10,
+});

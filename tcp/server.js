@@ -4,6 +4,7 @@ const wss = new WebSocket.Server({ port: 8080, host:'0.0.0.0' });
 const clients = new Map();
 
 function connection(ws) {
+    
     console.log('CONNECTION:');
     const id = uuidv4();
     const color = Math.floor(Math.random() * 360);
@@ -40,12 +41,19 @@ function connection(ws) {
             clients.set(ws, metadata)
             updatePlayerArray();
         }
-        else if(message.type = 'update'){
+        else if(message.type == 'update'){
             metadata.pos = message.pos;
             message.id = metadata.id;
             [...clients.keys()].forEach(client => {
                 client.send(JSON.stringify(message));
             });
+        }
+        else if(message.type == 'message'){
+            console.log("MESSAGE: " + message.message );
+            [...clients.keys()].forEach(client => {
+                client.send(JSON.stringify(message));
+            });
+
         }
         
     }
@@ -68,6 +76,7 @@ wss.on('connection', connection);
 
 wss.on('listening', () => {
     console.log(`Server started at ${wss.address().address}:${wss.address().port}`);
+    
 });
 
 
