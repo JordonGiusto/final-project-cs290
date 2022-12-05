@@ -40,6 +40,9 @@ function connection(ws) {
             metadata.name = message.name;
             clients.set(ws, metadata)
             updatePlayerArray();
+            [...clients.keys()].forEach(client => {
+                client.send(JSON.stringify({type: 'message', message: `[${metadata.name} has joined the server]`}));
+            });
         }
         else if(message.type == 'update'){
             metadata.pos = message.pos;
@@ -65,6 +68,7 @@ function connection(ws) {
 
         [...clients.keys()].forEach(client => {
             client.send(JSON.stringify(message));
+            client.send(JSON.stringify({type: 'message', message: `[${metadata.name} has left the server]`}));
         });
         clients.delete(ws);
     }
